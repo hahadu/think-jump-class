@@ -17,8 +17,6 @@
 
 namespace Hahadu\JumpPage;
 use think\facade\Db;
-use think\facade\View;
-use Hahadu\CooleAdmin\model\StatusCode;
 
 class JumpPage{
     /****
@@ -46,7 +44,6 @@ class JumpPage{
         $result = self::status_code($code);
         $result['jumpUrl'] = isset($jumpUrl)?url($jumpUrl)->build():url('/'.config('app.default_app'))->build(); //设置跳转链
         $result['waitSecond'] = isset($waitSecond)?$waitSecond:$result['waitSecond'];
-        View::assign($result);
-        return View::fetch(__DIR__.'/Tpl/jump.html');
+        return view(__DIR__.'/Tpl/jump.html',$result)->send();
     }
 }
