@@ -7,9 +7,12 @@
 ```
 return \Hahadu\ThinkJumpPage\JumpPage::jumpPage($code,'/index',3); 
 ```
-或者：
+推荐打包助手函数
 ```
-return \Hahadu\ThinkJumpPage\JumpPage::jumpPage($code,'/index',3)->send(); 
+function jump($code,$url='',$wait_second=null){
+   return \Hahadu\ThinkJumpPage\JumpPage::jumpPage($code,$url,$wait_second);
+}
+jump($code)->send(); 
 ```
 jumpPage()有三个参数
 
