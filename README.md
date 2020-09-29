@@ -7,6 +7,10 @@
 ```
 return \Hahadu\ThinkJumpPage\JumpPage::jumpPage($code,'/index',3); 
 ```
+或者：
+```
+return \Hahadu\ThinkJumpPage\JumpPage::jumpPage($code,'/index',3)->send(); 
+```
 jumpPage()有三个参数
 
 第一个参数是页面状态码
