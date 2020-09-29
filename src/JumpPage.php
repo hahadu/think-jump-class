@@ -31,7 +31,7 @@ class JumpPage{
             'code' => $status_data['code'],
             'status' => $status_data['status'],
             'describe' => $status_data['describe'],
-            'waitSecond' => $status_data['waitSecond'],
+            'waitSecond' => $status_data['wait_second'],
         ];
         return $result;
     }
