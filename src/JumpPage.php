@@ -44,6 +44,6 @@ class JumpPage{
         $result = self::status_code($code);
         $result['jumpUrl'] = isset($jumpUrl)?url($jumpUrl)->build():url('/'.config('app.default_app'))->build(); //设置跳转链
         $result['waitSecond'] = isset($waitSecond)?$waitSecond:$result['waitSecond'];
-        return view(__DIR__.'/Tpl/jump.html',$result)->send();
+        return view(__DIR__.'/Tpl/jump.html',$result);
     }
 }
