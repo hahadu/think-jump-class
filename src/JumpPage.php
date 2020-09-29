@@ -1,5 +1,22 @@
 <?php
-namespace Hahadu\ThinkJumpPage;
+/**
+ *  +----------------------------------------------------------------------
+ *  | Created by  hahadu (a low phper and coolephp)
+ *  +----------------------------------------------------------------------
+ *  | Copyright (c) 2020. [hahadu] All rights reserved.
+ *  +----------------------------------------------------------------------
+ *  | SiteUrl: https://github.com/hahadu
+ *  +----------------------------------------------------------------------
+ *  | Author: hahadu <582167246@qq.com>
+ *  +----------------------------------------------------------------------
+ *  | Date: 2020/9/29 下午2:20
+ *  +----------------------------------------------------------------------
+ *  | Description:   thinkPHP6的页面跳转类
+ *  +----------------------------------------------------------------------
+ **/
+
+namespace Hahadu\JumpPage;
+use think\facade\Db;
 use think\facade\View;
 use Hahadu\CooleAdmin\model\StatusCode;
 
@@ -9,8 +26,7 @@ class JumpPage{
      * @return array 状态码信息
      */
     public static function status_code($code){
-        $status_code = new StatusCode;
-        $status_data = $status_code::getByCode($code);
+        $status_data = Db::name('status_code')->getByCode($code);
         $result = [
             'code' => $status_data['code'],
             'status' => $status_data['status'],
