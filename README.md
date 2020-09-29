@@ -7,6 +7,10 @@
 ```
 return \Hahadu\ThinkJumpPage\JumpPage::jumpPage($code,'/index',3); 
 ```
+或者：
+```
+return \Hahadu\ThinkJumpPage\JumpPage::jumpPage($code,$url,$wait_second)->send();
+```
 推荐打包助手函数
 ```
 function jump($code,$url='',$wait_second=null){
