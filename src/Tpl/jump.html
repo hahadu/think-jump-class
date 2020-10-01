@@ -59,8 +59,11 @@
         var interval = setInterval(function(){
             var time = --wait.innerHTML;
             if(time <= 0) {
-                var index = parent.layer.getFrameIndex(window.name);
-                parent.layer.close(index);
+                if (window.frames.length != parent.frames.length) {
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
+                    window.parent.location.reload();
+                }
                 location.href = href;
                 clearInterval(interval);
             };
