@@ -3,6 +3,9 @@
 
 安装：composer require hahadu/think-jump-class
 
+* 支持自定义状态码
+* 支持layer弹窗自动关闭
+
 使用：
 ```
 return \Hahadu\ThinkJumpPage\JumpPage::jumpPage($code,'/index',3); 
