@@ -5,6 +5,9 @@
 
 * 支持自定义状态码
 * 支持layer弹窗自动关闭
+* 兼容tp旧版本的跳转写法（$this->success）
+
+
 
 使用：
 ```
@@ -47,5 +50,22 @@ CREATE TABLE `status_code` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='状态码';
 
 ```
+
+* 兼容旧版本的$this->success()方法：
+在需要跳转的控制器中引入’\Hahadu\ThinkJumpPage\TraitJump‘：
+```
+namespace app\controller;
+
+class HomeNavController extends AdminBaseController
+{
+    use \Hahadu\ThinkJumpPage\TraitJump; //引入TraitJump
+    public function index (){
+        $this->success('操作成功','/index/index'); 
+    }
+
+}
+```
+
+
 
 

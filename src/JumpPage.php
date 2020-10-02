@@ -17,9 +17,10 @@
  *  +----------------------------------------------------------------------
  **/
 
-namespace Hahadu\JumpPage;
+namespace Hahadu\ThinkJumpPage;
 use think\facade\Config;
 use think\facade\Db;
+use think\Response;
 
 class JumpPage{
     private static $_tpl_path =__DIR__.'/Tpl/jump.tpl';
@@ -66,14 +67,16 @@ class JumpPage{
      * @param string|null $url
      * @param int $waitSecond
      */
-    public function success($msg='',string $url=null,int $waitSecond=3){
+    public function success($msg='',string $jumpUrl=null,int $waitSecond=3){
         $result = [
             'code' => 302,
             'status' => 1,
             'describe' => $msg,
             'waitSecond' => $waitSecond,
-            'jumpUrl' => $url,
+            'jumpUrl' => isset($jumpUrl)?url($jumpUrl)->build():url('/'.config('app.default_app'))->build(),
         ];
+
+        //dump($this->tpl_path);
         return view($this->tpl_path,$result);
     }
 
@@ -82,13 +85,13 @@ class JumpPage{
      * @param string $msg
      * @param string|null $url
      */
-    public function error($msg='',string $url=null,int $waitSecond=3){
+    public function error($msg='',string $jumpUrl=null,int $waitSecond=3){
         $result = [
             'code' => 302,
             'status' => 0,
             'describe' => $msg,
             'waitSecond' => $waitSecond,
-            'jumpUrl' => $url,
+            'jumpUrl' => isset($jumpUrl)?url($jumpUrl)->build():url('/'.config('app.default_app'))->build(),
         ];
         return view( $this->tpl_path,$result);
     }
@@ -102,11 +105,11 @@ class JumpPage{
     public function ajaxReturn(int $code=302,$msg='',int $waitSecond=3){
         $result = [
             'code' => $code,
-            'status' => 4,
+          //  'status' => 4,
             'describe' => $msg,
-            'waitSecond' => $waitSecond,
+          //  'waitSecond' => $waitSecond,
         ];
-        return json_encode($result);
+        return Response::create($result,'json')->send();
     }
 
     /****
@@ -138,7 +141,7 @@ class JumpPage{
             if (0 != $time) {
                 $str .= $msg;
             }
-            exit($str);
+            return $str;
         }
     }
 }
