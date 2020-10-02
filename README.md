@@ -55,8 +55,9 @@ CREATE TABLE `status_code` (
 
 ```
 
-* 兼容旧版本的$this->success()方法：
-在需要跳转的控制器中引入’\Hahadu\ThinkJumpPage\TraitJump‘：
+* 兼容旧版本的$this->success()，$this->error()等方法：
+
+* 在需要跳转的控制器中引入’\Hahadu\ThinkJumpPage\TraitJump‘：
 ```
 namespace app\controller;
 
