@@ -55,7 +55,7 @@ CREATE TABLE `status_code` (
 
 ```
 
-* 兼容旧版本的$this->success()，$this->error()等方法：
+* 兼容thinkPHP旧版本的$this->success()，$this->error()等方法：
 
 * 在需要跳转的控制器中引入’\Hahadu\ThinkJumpPage\TraitJump‘：
 ```
