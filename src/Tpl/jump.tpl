@@ -15,8 +15,6 @@
         .system-message .footer {
             width: auto;text-decoration:none;
         }
-
-
         .system-message .success,.system-message .error{ line-height: 1.8em; font-size: 36px; color:#F93; }
         .system-message .detail{ font-size: 12px; line-height: 20px; margin-top: 12px; display:none}
     </style>
@@ -34,11 +32,11 @@
     {/case}
     {case 5 }
         <h1 align="center">warning</h1>
-        <p class="success" align="center">{$describe}</p>
+        <p class="error" align="center">{$describe}</p>
     {/case}
     {case 4 }
         <h1 align="center">{$code}</h1>
-        <p class="success" align="center">{$describe}</p>
+        <p class="error" align="center">{$describe}</p>
     {/case}
     {default /}
        <h1 align="center">:)</h1>
@@ -63,9 +61,10 @@
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
                     window.parent.location.reload();
+                }else{
+                    location.href = href;
+                    clearInterval(interval);
                 }
-                location.href = href;
-                clearInterval(interval);
             };
         }, 1000);
     })();

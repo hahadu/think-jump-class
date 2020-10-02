@@ -1,9 +1,11 @@
 {
     "name": "hahadu/think-jump-class",
     "description": "基于thinkphp6的页面跳转模块",
-    "type": "library",
+    "keywords": ["thinkphp", "think-jump"],
+    "type": "think-extend",
     "require": {
-        "php": ">=7.1"
+        "php": ">=7.1",
+        "topthink/think-view": "^1.0"
     },
     "require-dev": {
         "php": ">=7.1"
@@ -19,6 +21,13 @@
     "autoload": {
         "psr-4": {
             "Hahadu\\ThinkJumpPage\\": "src/"
+        }
+    },
+    "extra": {
+        "think": {
+            "config": {
+                "jumpPage": "src/config/jumpPage.php"
+            }
         }
     },
         "minimum-stability": "dev"
