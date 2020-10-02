@@ -32,6 +32,10 @@ jumpPage()有三个参数
 
 第三个参数是等待时间（秒），默认为’wait_second‘的值
 
+* 自定义跳转模板文件：comopser安装后会自动在config生成一个jumpPage.php的配置文件
+* 修改JumpPage中的'dispatch_tpl'值为你的配置文件路径即可
+
+
 创建跳转状态码数据表：
 
 delete_time需要根据你的软删除设置DEFAULT值
