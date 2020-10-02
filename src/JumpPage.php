@@ -20,6 +20,7 @@
 namespace Hahadu\ThinkJumpPage;
 use think\facade\Config;
 use think\facade\Db;
+use think\facade\Request;
 use think\Response;
 
 class JumpPage{
@@ -56,7 +57,11 @@ class JumpPage{
             'status' => $status_code_data['status'],
             'describe' => $status_code_data['describe'],
         ];
-        $result['jumpUrl'] = isset($jumpUrl)?url($jumpUrl)->build():url('/'.config('app.default_app'))->build(); //设置跳转链
+        if(!isset($jumpUrl)){
+            $result['jumpUrl'] = (null != Request::server('HTTP_REFERER'))?Request::server('HTTP_REFERER'):url('/'.config('app.default_app'))->build();
+        }else{
+            $result['jumpUrl'] = url($jumpUrl)->build();
+        }
         $result['waitSecond'] = isset($waitSecond)?$waitSecond:$status_code_data['wait_second'];
         return view( self::$_tpl_path,$result);
     }
