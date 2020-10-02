@@ -58,7 +58,7 @@ class JumpPage{
             'describe' => $status_code_data['describe'],
         ];
         if(!isset($jumpUrl)){
-            $result['jumpUrl'] = (null != Request::server('HTTP_REFERER'))?Request::server('HTTP_REFERER'):url('/'.config('app.default_app'))->build();
+            $result['jumpUrl'] = (strstr(Request::server('HTTP_REFERER'),Request::server('HTTP_HOST')))?Request::server('HTTP_REFERER'):url('/'.config('app.default_app'))->build();
         }else{
             $result['jumpUrl'] = url($jumpUrl)->build();
         }
