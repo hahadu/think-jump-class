@@ -62,6 +62,7 @@ class JumpPage{
         }else{
             $result['jumpUrl'] = url($jumpUrl)->build();
         }
+        //$result['jumpUrl'] = isset($jumpUrl)?url($jumpUrl)->build():url('/'.config('app.default_app'))->build(); //设置跳转链
         $result['waitSecond'] = isset($waitSecond)?$waitSecond:$status_code_data['wait_second'];
         return view( self::$_tpl_path,$result);
     }
@@ -69,7 +70,7 @@ class JumpPage{
     /****
      * 兼容旧版本的跳转方法
      * @param string $msg
-     * @param string|null $url
+     * @param string|null $jumpUrl
      * @param int $waitSecond
      */
     public function success($msg='',string $jumpUrl=null,int $waitSecond=3){
@@ -78,17 +79,20 @@ class JumpPage{
             'status' => 1,
             'describe' => $msg,
             'waitSecond' => $waitSecond,
-            'jumpUrl' => isset($jumpUrl)?url($jumpUrl)->build():url('/'.config('app.default_app'))->build(),
         ];
+        if(!isset($jumpUrl)){
+            $result['jumpUrl'] = (null != Request::server('HTTP_REFERER'))?Request::server('HTTP_REFERER'):url('/'.config('app.default_app'))->build();
+        }else{
+            $result['jumpUrl'] = url($jumpUrl)->build();
+        }
 
-        //dump($this->tpl_path);
         return view($this->tpl_path,$result);
     }
 
     /****
      * 兼容旧版本的跳转方法
      * @param string $msg
-     * @param string|null $url
+     * @param string|null $jumpUrl
      */
     public function error($msg='',string $jumpUrl=null,int $waitSecond=3){
         $result = [
@@ -96,8 +100,13 @@ class JumpPage{
             'status' => 0,
             'describe' => $msg,
             'waitSecond' => $waitSecond,
-            'jumpUrl' => isset($jumpUrl)?url($jumpUrl)->build():url('/'.config('app.default_app'))->build(),
         ];
+        if(!isset($jumpUrl)){
+            $result['jumpUrl'] = (null != Request::server('HTTP_REFERER'))?Request::server('HTTP_REFERER'):url('/'.config('app.default_app'))->build();
+        }else{
+            $result['jumpUrl'] = url($jumpUrl)->build();
+        }
+
         return view( $this->tpl_path,$result);
     }
 
@@ -107,26 +116,32 @@ class JumpPage{
      * @param int|null $code 页面的态码
      * @param int $waitSecond
      */
-    public function ajaxReturn(int $code=302,$msg='',int $waitSecond=3){
+    public function ajaxReturn(int $code=1,$msg='',int $waitSecond=3){
         $result = [
             'code' => $code,
-          //  'status' => 4,
+            //  'status' => 4,
             'describe' => $msg,
-          //  'waitSecond' => $waitSecond,
+            'waitSecond' => $waitSecond,
         ];
-        return Response::create($result,'json')->send();
+        return json_encode($result);
     }
 
     /****
      * 兼容旧版本URL重定向
      * 功能完善中。。。。
-     * @param string $url 重定向的URL地址
+     * @param string $jumpUrl 重定向的URL地址
      * @param integer $time 重定向的等待时间（秒）
      * @param string $msg 重定向前的提示信息
      * @return void|string
      */
-    public function redirect($url, $time = 0, $msg = '')
+    public function redirect($jumpUrl, $time = 0, $msg = '')
     {
+        if(!isset($jumpUrl)){
+            $url = (null != Request::server('HTTP_REFERER'))?Request::server('HTTP_REFERER'):url('/'.config('app.default_app'))->build();
+        }else{
+            $url = url($jumpUrl)->build();
+        }
+
         //多行URL地址支持
         $url = str_replace(array("\n", "\r"), '', $url);
         if (empty($msg)) {
@@ -146,7 +161,7 @@ class JumpPage{
             if (0 != $time) {
                 $str .= $msg;
             }
-            return $str;
+            exit($str);
         }
     }
 }
