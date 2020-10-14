@@ -80,6 +80,7 @@ class JumpPage{
             'describe' => $msg,
             'waitSecond' => $waitSecond,
         ];
+        http_response_code($result['code']);
         if(!isset($jumpUrl)){
             $result['jumpUrl'] = (null != Request::server('HTTP_REFERER'))?Request::server('HTTP_REFERER'):url('/'.config('app.default_app'))->build();
         }else{
@@ -101,6 +102,7 @@ class JumpPage{
             'describe' => $msg,
             'waitSecond' => $waitSecond,
         ];
+        http_response_code($result['code']);
         if(!isset($jumpUrl)){
             $result['jumpUrl'] = (null != Request::server('HTTP_REFERER'))?Request::server('HTTP_REFERER'):url('/'.config('app.default_app'))->build();
         }else{
@@ -141,6 +143,7 @@ class JumpPage{
         }else{
             $url = url($jumpUrl)->build();
         }
+        http_response_code(302);
 
         //多行URL地址支持
         $url = str_replace(array("\n", "\r"), '', $url);
