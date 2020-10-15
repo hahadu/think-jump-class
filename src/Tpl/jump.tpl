@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>跳转提示{if $status==4}:{$code}{/if}</title>
+    <title>跳转提示:{if $status==4}:{$code}{/if}</title>
     <style type="text/css">
         *{ padding: 0; margin: 0; }
         body{ background: #fff; font-family: '微软雅黑'; color: #333; font-size: 16px; }
@@ -22,25 +22,13 @@
 <body>
 <div class="system-message">
     {switch $status }
-    {case 0 }
-    <h1 align="center">:(</h1>
-    <p class="error" align="center">{$describe}</p>
-    {/case}
     {case 1 }
-        <h1 align="center">:)</h1>
-        <p class="success" align="center">{$describe}</p>
-    {/case}
-    {case 5 }
-        <h1 align="center">warning</h1>
-        <p class="error" align="center">{$describe}</p>
-    {/case}
-    {case 4 }
-        <h1 align="center">{$code}</h1>
-        <p class="error" align="center">{$describe}</p>
+        <h1 align="center">{$title}</h1>
+        <p class="success" align="center">{$message}</p>
     {/case}
     {default /}
-       <h1 align="center">:)</h1>
-       <p class="success" align="center">{$describe}</p>
+       <h1 align="center">{$title}</h1>
+       <p class="error" align="center">{$message}</p>
     {/switch}
 
     <p class="detail"></p>

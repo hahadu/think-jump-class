@@ -39,7 +39,7 @@ class JumpPage{
      */
     public static function status_code($code){
         $status_data = Db::name('status_code')
-            ->field('code,status,describe,wait_second')
+            ->field('code,status,title,message,response_code,wait_second')
             ->getByCode($code);
         return $status_data;
     }
@@ -54,9 +54,11 @@ class JumpPage{
         $status_code_data = self::status_code($code);
         $result = [
             'code' => $status_code_data['code'],
+            'title' => $status_code_data['title'],
             'status' => $status_code_data['status'],
-            'describe' => $status_code_data['describe'],
+            'message' => $status_code_data['message'],
         ];
+        http_response_code($status_code_data['response_code']);
         if(!isset($jumpUrl)){
             $result['jumpUrl'] = (strstr(Request::server('HTTP_REFERER'),Request::server('HTTP_HOST')))?Request::server('HTTP_REFERER'):url('/'.config('app.default_app'))->build();
         }else{
@@ -75,12 +77,14 @@ class JumpPage{
      */
     public function success($msg='',string $jumpUrl=null,int $waitSecond=3){
         $result = [
-            'code' => 302,
+            'code' => 301,
             'status' => 1,
-            'describe' => $msg,
+            'title' => ':)',
+            'message' => $msg,
             'waitSecond' => $waitSecond,
+            'response_code' => 301
         ];
-        http_response_code($result['code']);
+        http_response_code($result['response_code']);
         if(!isset($jumpUrl)){
             $result['jumpUrl'] = (null != Request::server('HTTP_REFERER'))?Request::server('HTTP_REFERER'):url('/'.config('app.default_app'))->build();
         }else{
@@ -93,16 +97,19 @@ class JumpPage{
     /****
      * 兼容旧版本的跳转方法
      * @param string $msg
+     * @param int $waitSecond
      * @param string|null $jumpUrl
      */
-    public function error($msg='',string $jumpUrl=null,int $waitSecond=3){
+    public function error($msg='',$jumpUrl=null, $waitSecond=3){
         $result = [
-            'code' => 302,
+            'code' => 301,
             'status' => 0,
-            'describe' => $msg,
+            'title' => ':)',
+            'message' => $msg,
             'waitSecond' => $waitSecond,
+            'response_code' => 301
         ];
-        http_response_code($result['code']);
+        http_response_code($result['response_code']);
         if(!isset($jumpUrl)){
             $result['jumpUrl'] = (null != Request::server('HTTP_REFERER'))?Request::server('HTTP_REFERER'):url('/'.config('app.default_app'))->build();
         }else{
@@ -122,7 +129,7 @@ class JumpPage{
         $result = [
             'code' => $code,
             //  'status' => 4,
-            'describe' => $msg,
+            'message' => $msg,
             'waitSecond' => $waitSecond,
         ];
         return json_encode($result);
@@ -143,7 +150,7 @@ class JumpPage{
         }else{
             $url = url($jumpUrl)->build();
         }
-        http_response_code(302);
+        http_response_code(301);
 
         //多行URL地址支持
         $url = str_replace(array("\n", "\r"), '', $url);

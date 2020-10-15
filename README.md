@@ -7,6 +7,12 @@
 * 支持layer弹窗自动关闭
 * 兼容tp旧版本的跳转写法（$this->success）
 
+10.15更新：
+* V3.0版
+* - 1、新增：自定义http_response_code
+* - 2、新增：自定义title
+* - 3、修复：mysql保留关键字冲突
+
 
 
 使用：
@@ -44,11 +50,13 @@ delete_time需要根据你的软删除设置DEFAULT值
 -- 表的结构 `status_code`
 --
 
-CREATE TABLE `status_code` (
+CREATE TABLE `du_status_code` (
   `id` int(11) NOT NULL,
-  `code` int(32) NOT NULL,
+  `code` int(32) NOT NULL COMMENT '页面查询状态码',
   `status` int(10) NOT NULL DEFAULT 1 COMMENT '状态1:success,0:error',
-  `describe` varchar(50) NOT NULL,
+  `message` varchar(50) NOT NULL COMMENT '页面状态说明',
+  `title` varchar(200) DEFAULT ':(' COMMENT '页面h1内容',
+  `response_code` int(10) DEFAULT 301 COMMENT '页面跳转码http_response_code',
   `wait_second` int(20) NOT NULL DEFAULT 3 COMMENT '跳转等待时间',
   `delete_time` int(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='状态码';
