@@ -11,7 +11,8 @@
 * V3.0版
 * - 1、新增：自定义http_response_code
 * - 2、新增：自定义title
-* - 3、修复：mysql保留关键字冲突
+* - 3、新增：Exception
+* - 4、修复：mysql保留关键字冲突
 
 
 
