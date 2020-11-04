@@ -23,6 +23,10 @@ use think\facade\Db;
 use think\facade\Request;
 use think\Response;
 
+/****
+ * thinkphp6 页面跳转
+ * @package Hahadu\ThinkJumpPage
+ */
 class JumpPage{
     private static $_tpl_path =__DIR__.'/Tpl/jump.tpl';
     private $tpl_path;
