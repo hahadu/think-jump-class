@@ -5,7 +5,7 @@
     "type": "think-extend",
     "require": {
         "php": ">=7.1",
-        "topthink/think-view": "^1.0"
+        "topthink/think-view": ">=1.0"
     },
     "require-dev": {
         "php": ">=7.1"
