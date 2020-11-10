@@ -63,7 +63,7 @@ class JumpPage{
      * @param int $code 页面状态码
      * @param string|array|null $jumpUrl 要跳转的页面
      * @param int|null $waitSecond 跳转等待时间
-     * @return string
+     * @return string|array
      */
     public static function jumpPage($code,$jumpUrl = null,$waitSecond = null){
         $status_code_data = self::status_code($code);
@@ -76,7 +76,7 @@ class JumpPage{
         http_response_code($status_code_data['response_code']);
         static::init() ;
         if(Config::get('jumpPage.ajax')){
-            switch (self::$ajax_type){
+            switch (mb_strtolower(self::$ajax_type)){
                 case 'jsonp':
                     return jsonp($result);
                     break;
