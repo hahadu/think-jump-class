@@ -30,13 +30,20 @@ use think\Response;
 class JumpPage{
     private static $_tpl_path =__DIR__.'/Tpl/jump.tpl';
     private $tpl_path;
+    private static $ajax_type='json';
     public function __construct(){
         if(!empty(Config::get('jumpPage.dispatch_tpl'))){
             $this->tpl_path = Config::get('jumpPage.dispatch_tpl');
+            self::$_tpl_path = Config::get('jumpPage.dispatch_tpl');
         }else{
             $this->tpl_path = __DIR__.'/Tpl/jump.tpl';
         }
+        self::$ajax_type = Config::get('jumpPage.ajax_type');
+        if(!empty(Config::get('jumpPage.ajax_type'))){
+            self::$ajax_type = Config::get('jumpPage.ajax_type');
+        }
     }
+
     /****
      * @param int $code 页面状态码
      * @return array 状态码信息
@@ -46,6 +53,10 @@ class JumpPage{
             ->field('code,status,title,message,response_code,wait_second')
             ->getByCode($code);
         return $status_data;
+    }
+    public static function init(){
+        if(!empty(Config::get('jumpPage')))
+            return new static();
     }
 
     /****
@@ -63,12 +74,24 @@ class JumpPage{
             'message' => $status_code_data['message'],
         ];
         http_response_code($status_code_data['response_code']);
+        static::init() ;
+        if(Config::get('jumpPage.ajax')){
+            switch (self::$ajax_type){
+                case 'jsonp':
+                    return jsonp($result);
+                    break;
+                case 'xml':
+                    return xml($result);
+                default:
+                    return json($result);
+                    break;
+            }
+        }
         if(!isset($jumpUrl)){
             $result['jumpUrl'] = (strstr(Request::server('HTTP_REFERER'),Request::server('HTTP_HOST')))?Request::server('HTTP_REFERER'):url('/'.config('app.default_app'))->build();
         }else{
             $result['jumpUrl'] = url($jumpUrl)->build();
         }
-        //$result['jumpUrl'] = isset($jumpUrl)?url($jumpUrl)->build():url('/'.config('app.default_app'))->build(); //设置跳转链
         $result['waitSecond'] = isset($waitSecond)?$waitSecond:$status_code_data['wait_second'];
         return view( self::$_tpl_path,$result);
     }
