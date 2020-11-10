@@ -80,6 +80,9 @@ class JumpPage{
                 case 'jsonp':
                     return jsonp($result);
                     break;
+                case 'array':
+                    return $result;
+                    break;
                 case 'xml':
                     return xml($result);
                 default:
