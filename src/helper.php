@@ -17,12 +17,13 @@
 
 use Hahadu\ThinkJumpPage\JumpPage;
 
-/****
- * @param $code
- * @param string|null $jumpUrl
- * @param int|null $waitSecond
- */
 if(!function_exists('jump_page')){
+    /****
+     * 页面跳转
+     * @param int $code 状态码
+     * @param string|null $jumpUrl 跳转url
+     * @param int|null $waitSecond 跳转等待时间
+     */
     function jump_page($code, $jumpUrl = null, $waitSecond = null){
         return JumpPage::jumpPage($code,$jumpUrl,$waitSecond);
     }

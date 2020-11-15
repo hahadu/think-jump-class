@@ -6,15 +6,16 @@ use think\Response;
 
 trait TraitJump{
     private $jumpPage;
-    public function __construct(){
+    public function initialize(){
         $this->jumpPage = new JumpPage();
     }
 
+
     protected function success($msg='',string $url=null,int $waitSecond=3){
-        return  $this->jumpPage->success($msg,$url,$waitSecond)->send();
+        return  $this->jumpPage->success($msg,$url,$waitSecond);
     }
     protected function error($msg='',string $url=null,int $waitSecond=3){
-        return  $this->jumpPage->error($msg,$url,$waitSecond)->send();
+        return  $this->jumpPage->error($msg,$url,$waitSecond);
     }
     protected function redirect($url, $time = 0, $msg = ''){
         return  $this->jumpPage->redirect($url,$time,$msg);
