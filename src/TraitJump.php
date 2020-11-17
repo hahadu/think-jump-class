@@ -5,24 +5,20 @@ use think\facade\Config;
 use think\Response;
 
 trait TraitJump{
-    private $jumpPage;
-    public function initialize(){
-        $this->jumpPage = new JumpPage();
+    private function _init_jump_class(){
+        return new JumpPage();
     }
-
-
     protected function success($msg='',string $url=null,int $waitSecond=3){
-        return  $this->jumpPage->success($msg,$url,$waitSecond);
+        return  $this->_init_jump_class()->success($msg,$url,$waitSecond);
     }
     protected function error($msg='',string $url=null,int $waitSecond=3){
-        return  $this->jumpPage->error($msg,$url,$waitSecond);
+        return  $this->_init_jump_class()->error($msg,$url,$waitSecond);
     }
     protected function redirect($url, $time = 0, $msg = ''){
-        return  $this->jumpPage->redirect($url,$time,$msg);
+        return  $this->_init_jump_class()->redirect($url,$time,$msg);
     }
     protected function ajaxReturn(int $code=302,$msg='',int $waitSecond=3){
-
-        return  $this->jumpPage->ajaxReturn($code,$msg,$waitSecond);
+        return  $this->_init_jump_class()->ajaxReturn($code,$msg,$waitSecond);
     }
 
 }
