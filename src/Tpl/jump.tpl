@@ -36,7 +36,7 @@
         页面自动 <a id="href" href="{$jumpUrl}">跳转</a> 等待时间： <b id="wait">{$waitSecond}</b>
     </p>
     <div class="system-message">
-        <p class="footer" align="right"><a href="http://www.imagevd.com" target="_blank">IMAGEDesign</a>&copy 版权所有</p>
+        <p class="footer" align="right">For Designer By<a href="http://www.imagevd.com" target="_blank">IMAGEDesign</a></p>
     </div>
 </div>
 <script type="text/javascript">
