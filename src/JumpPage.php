@@ -93,7 +93,11 @@ class JumpPage{
         if(!isset($jumpUrl)){
             $result['jumpUrl'] = (strstr(Request::server('HTTP_REFERER'),Request::server('HTTP_HOST')))?Request::server('HTTP_REFERER'):url('/'.config('app.default_app'))->build();
         }else{
-            $result['jumpUrl'] = url($jumpUrl)->build();
+            if(is_array($jumpUrl)){
+                $result['jumpUrl'] = url($jumpUrl['url'],$jumpUrl['query'])->build();
+            }else{
+                $result['jumpUrl'] = url($jumpUrl)->build();
+            }
         }
         $result['waitSecond'] = isset($waitSecond)?$waitSecond:$status_code_data['wait_second'];
         return view( self::$_tpl_path,$result);
